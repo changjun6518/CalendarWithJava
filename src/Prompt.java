@@ -1,3 +1,4 @@
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -5,44 +6,42 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Prompt {
-    public static void registerTodo(HashMap<String ,ArrayList<String>> map) {
+    public static void registerTodo(HashMap<String ,ArrayList<String>> map) throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("[일정 등록] 날짜를 입력하시오. ex)2021-07-13");
         System.out.print("> ");
         String date = sc.next();
         sc.nextLine();
+
+        FileWriter fw = new FileWriter("C:\\Users\\ChangJun.Choi\\Desktop\\자바\\Calendar\\일정저장소\\" + date + ".txt", true);
+
         System.out.println("일정을 입력하세요.");
         System.out.print("> ");
         String schedule = sc.nextLine();
-        ArrayList<String> scheduleList = new ArrayList<>();
-        scheduleList.add(schedule);
-        if (map.containsKey(date)) {
-            ArrayList<String> tempList = map.get(date);
-            tempList.add(schedule);
-            map.put(date, tempList);
-        } else {
-            map.put(date, scheduleList);
-        }
 
+        fw.write(schedule+"\n");
+        fw.close();
 
         System.out.println("일정이 등록되었습니다");
         return;
     }
 
-    public static void showTodo(HashMap<String ,ArrayList<String>> map) {
+    public static void showTodo(HashMap<String ,ArrayList<String>> map) throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("[일정 검색] 날짜를 입력하세요.");
         System.out.print("> ");
         String date = sc.next();
-        if (map.containsKey(date)) {
-            ArrayList<String> tempList = map.get(date);
-            System.out.printf("%d개의 일정이 있습니다.\n", tempList.size());
-            int i = 1;
-            for (String s : tempList) {
-                System.out.printf("%d. %s\n", i, s);
-                i++;
-            }
+
+        FileReader fr = new FileReader("C:\\Users\\ChangJun.Choi\\Desktop\\자바\\Calendar\\일정저장소\\" + date + ".txt");
+        BufferedReader br = new BufferedReader(fr);
+        int i = 1;
+        while (true) {
+            String str = br.readLine();
+            if (str == null) break;
+            System.out.println(i + ". " + str);
+            i++;
         }
+        br.close();
     }
 
     public static void showCalendar() {

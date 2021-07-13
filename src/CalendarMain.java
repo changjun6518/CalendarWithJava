@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,7 @@ public class CalendarMain {
 
     public static HashMap<String, ArrayList<String >> map = new HashMap<>();
 
-    public static void manager(char c) {
+    public static void manager(char c) throws IOException {
         switch (c) {
             case '1':
                 Prompt.registerTodo(map);
@@ -25,7 +26,7 @@ public class CalendarMain {
         }
     }
 
-    public static void start(Scanner sc) {
+    public static void start(Scanner sc) throws IOException {
         while (true) {
             System.out.println("+----------------------+\n" +
                     "| 1. 일정 등록           \n" +
@@ -46,7 +47,7 @@ public class CalendarMain {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         start(sc);
         System.out.println("행복 코딩하세요!");
